@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Codex Desk</title>
+  <link rel="stylesheet" href="../node_modules/@xterm/xterm/css/xterm.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../assets/katex/katex.min.css">
+  <link rel="stylesheet" href="desktop.css">
+</head>
+<body>
+  <svg class="symbols" aria-hidden="true"><defs>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-8 8H4l1.5-4A8 8 0 1 1 20 11.5Z"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="m9 3-1 3-3 1-2 3 2 2-1 3 2 3 3-1 2 2h3l1-3 3-1 2-3-2-2 1-3-2-3-3 1-2-2Z"/><circle cx="11.5" cy="11" r="3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></symbol>
+    <symbol id="i-sidebar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></symbol>
+    <symbol id="i-diff" viewBox="0 0 24 24"><path d="M7 3v13m0 0-3-3m3 3 3-3M17 21V8m0 0-3 3m3-3 3 3M4 5h6m4 14h6"/></symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24"><path d="m5 6 5 5-5 5m9 1h6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-attach" viewBox="0 0 24 24"><path d="m9 16 8-8a3 3 0 0 0-4-4L5 12a5 5 0 0 0 7 7l8-8m-13 3 8-8"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></symbol>
+    <symbol id="i-skill" viewBox="0 0 24 24"><path d="m12 3 8 5-8 5-8-5Zm-8 9 8 5 8-5M4 16l8 5 8-5"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 10a8 8 0 1 0-1 7M20 4v6h-6"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8ZM14 3v6h5M8 13h8M8 17h6"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14A8.5 8.5 0 0 1 10 4a8.5 8.5 0 1 0 10 10Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8"/></symbol>
+    <symbol id="i-desktop" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 17v4m-4 0h8"/></symbol>
+    <symbol id="i-tasks" viewBox="0 0 24 24"><path d="m4 6 2 2 3-4m3 2h8M4 13h4m4 0h8M4 20h4m4 0h8"/></symbol>
+    <symbol id="i-queue" viewBox="0 0 24 24"><path d="M3 5h12M3 11h7M3 17h6"/><circle cx="17" cy="16" r="5"/><path d="M17 13v3l2 1"/></symbol>
+  </defs></svg>
+  <div class="app" id="app">
+    <aside class="sidebar" aria-label="项目与对话">
+      <div class="window-space"></div>
+      <div class="brand"><svg aria-hidden="true"><use href="#i-terminal"/></svg><span>Codex Desk</span></div>
+      <button id="new-chat" class="new-chat"><svg><use href="#i-plus"/></svg>新建对话<kbd>⌘ N</kbd></button>
+      <label class="search"><svg><use href="#i-search"/></svg><input id="search" placeholder="搜索对话" aria-label="搜索对话"><kbd>⌘ K</kbd></label>
+      <nav class="sidebar-shortcuts" aria-label="常用功能"><button data-workspace-open="tasks"><svg aria-hidden="true"><use href="#i-tasks"/></svg>任务</button><button data-workspace-open="files"><svg aria-hidden="true"><use href="#i-file"/></svg>项目文件</button><button data-workspace-open="connections"><svg aria-hidden="true"><use href="#i-skill"/></svg>技能与连接</button></nav>
+      <div class="sidebar-content">
+      <div class="section-label"><span>项目</span><button id="add-project" class="icon-button" title="添加项目" aria-label="添加项目"><svg><use href="#i-plus"/></svg></button></div>
+      <div id="projects" class="projects"></div>
+      <div class="section-label history-label"><span id="history-label">最近对话</span><button id="archive-toggle" class="small-link" title="切换归档对话">归档</button></div>
+      <nav id="threads" class="threads" aria-label="对话列表"></nav>
+      <button id="more-threads" class="small-link load-threads" hidden>加载更多</button>
+      </div>
+      <div class="sidebar-footer"><button id="settings-button" class="settings-button" title="设置"><svg aria-hidden="true"><use href="#i-settings"/></svg><span>设置<small id="connection-label"><i class="status-dot"></i>正在启动</small></span></button><button id="theme-button" class="icon-button" title="切换深浅色" aria-label="切换深浅色"><svg><use href="#i-moon"/></svg></button></div>
+    </aside>
+    <main class="main">
+      <header class="toolbar">
+        <div class="toolbar-left"><button class="icon-button" id="toggle-sidebar" title="切换侧栏" aria-label="切换侧栏"><svg><use href="#i-sidebar"/></svg></button><span class="breadcrumb" id="breadcrumb">工作台</span><span class="breadcrumb-sep">/</span><span class="thread-title" id="thread-title">新的对话</span></div>
+        <div class="toolbar-right"><span class="branch" id="branch"></span><button id="font-size-button" class="toolbar-button" title="调整字号" aria-label="调整字号" aria-haspopup="menu">Aa 18</button><button id="terminal-button" class="toolbar-button" title="打开终端" aria-label="打开终端"><svg><use href="#i-terminal"/></svg><span>终端</span></button><button id="changes-button" class="toolbar-button" title="查看改动" aria-label="查看改动"><svg><use href="#i-diff"/></svg><span>改动</span><span id="change-count" class="count" hidden></span></button><button id="thread-menu-button" class="icon-button" title="发送第一条消息后可管理对话" aria-label="对话操作" disabled><svg><use href="#i-more"/></svg></button></div>
+      </header>
+      <div id="banner" class="banner" hidden></div>
+      <div class="work-area">
+        <section class="chat-column">
+          <div id="conversation" class="conversation" aria-label="对话内容">
+            <div id="welcome" class="welcome"><h1>开始新的任务</h1><p id="welcome-subtitle">选择项目，开始对话。</p><div class="welcome-actions"><button id="welcome-project"><svg><use href="#i-folder"/></svg>选择项目</button><button id="welcome-review"><svg><use href="#i-diff"/></svg>查看改动</button></div></div>
+            <button id="older-turns" class="older-turns" hidden>加载更早的消息</button>
+            <div id="messages" class="messages" aria-live="polite" aria-relevant="additions"></div>
+            <div id="running" class="running" hidden><span class="working-dot"></span><span id="running-label">正在处理</span><span id="elapsed"></span></div>
+          </div>
+          <button id="scroll-bottom" class="scroll-bottom" hidden title="回到最新消息">↓</button>
+          <div id="approval-area" class="approval-area"></div>
+          <section class="composer-wrap">
+            <div class="composer" id="composer">
+              <div id="attachments" class="attachments"></div>
+              <textarea id="prompt" rows="2" placeholder="描述任务，或粘贴图片…" aria-label="输入任务"></textarea>
+              <div class="composer-bottom"><div class="composer-options"><button id="attach-button" class="icon-button" title="添加文件或图片" aria-label="添加附件"><svg><use href="#i-plus"/></svg></button><button id="skills-button" class="icon-button" title="选择技能" aria-label="选择技能"><svg><use href="#i-skill"/></svg></button><button id="model-chip" class="meta-button" title="选择模型">gpt-6.1-sol <span>⌄</span></button><select id="effort" aria-label="思考强度" title="思考强度"><option value="low">轻量</option><option value="medium">标准</option><option value="high" selected>深入</option><option value="xhigh">更深入</option></select></div><div class="composer-actions"><div id="composer-tools"></div><button id="send" class="send" title="发送 · Enter" aria-label="发送"><svg><use href="#i-arrow"/></svg></button></div></div>
+            </div>
+            <div class="composer-meta"><div><button id="project-button" class="project-chip" aria-label="选择项目"><svg><use href="#i-folder"/></svg><span id="project-chip">选择项目</span></button><select id="permission" aria-label="执行权限" title="执行权限"><option value="readonly">只读</option><option value="workspace" selected>项目内执行</option><option value="full">完全访问</option></select></div><span id="token-usage" title="由引擎报告的 token 使用量"></span><span class="enter-hint">Enter 发送</span></div>
+          </section>
+          <section id="terminal-panel" class="terminal-panel" hidden><div class="panel-header"><span><svg><use href="#i-terminal"/></svg>终端 <small id="terminal-cwd"></small></span><button id="terminal-close" class="icon-button" title="关闭终端" aria-label="关闭终端"><svg><use href="#i-close"/></svg></button></div><div id="terminal"></div></section>
+        </section>
+        <aside id="detail-panel" class="detail-panel" hidden><div class="panel-header"><div class="tabs"><button id="tab-changes" class="selected">改动</button><button id="tab-file">文件</button></div><button id="detail-close" class="icon-button" title="关闭面板" aria-label="关闭面板"><svg><use href="#i-close"/></svg></button></div><div id="details" class="details"></div></aside>
+      </div>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <div id="popover" class="popover" hidden></div>
+  <dialog id="settings-dialog" class="settings-dialog"><form id="settings-form">
+    <div class="dialog-header"><div><span class="eyebrow">PERSONAL WORKSPACE</span><h2>设置</h2></div><button type="button" class="icon-button close-dialog" aria-label="关闭设置"><svg><use href="#i-close"/></svg></button></div>
+    <div class="settings-tabs"><button type="button" data-section="connection" class="selected">API 连接</button><button type="button" data-section="appearance">偏好</button><button type="button" data-section="extensions">Skills 与 MCP</button></div>
+    <div class="settings-body">
+      <section data-settings="connection"><p class="settings-intro">为这个工作台配置独立的 API 连接。</p>
+        <label class="field">API 地址<input name="baseUrl" type="url" required placeholder="https://api.openai.com/v1"><small>按服务商给出的完整地址填写，包含所需的 /v1。</small></label>
+        <div class="field-row"><label class="field">默认模型<input name="model" required placeholder="gpt-6.1-sol" list="model-options"></label><label class="field">思考强度<select name="effort"><option value="low">轻量</option><option value="medium">标准</option><option value="high" selected>深入</option><option value="xhigh">更深入</option></select></label></div>
+        <datalist id="model-options"></datalist>
+        <label class="field">API key<div class="key-field"><input name="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="在这里粘贴 API key"><button id="show-key" type="button" class="small-link">显示</button></div><small id="key-hint">key 仅保存在这台电脑，并通过系统加密。</small></label>
+        <div class="key-actions"><label class="checkbox"><input name="rememberKey" type="checkbox" checked>在这台电脑记住 key</label><button id="clear-key" class="small-link" type="button">清除已保存的 key</button></div>
+        <label class="field engine-field">Codex 引擎路径 <span>自动检测，通常不需要修改</span><div class="key-field"><input name="binary" placeholder="自动检测官方客户端附带的 Codex CLI"><button type="button" id="browse-binary" class="small-link">选择</button></div></label>
+        <div class="connection-test"><button type="button" id="test-connection" class="secondary">保存并测试连接</button><span id="test-result"></span></div>
+      </section>
+      <section data-settings="appearance" hidden>
+        <label class="field">外观<select name="theme"><option value="light">纸白</option><option value="dark">墨色</option><option value="system">跟随系统</option></select></label>
+        <label class="field">对话字号<select name="fontSize"><option value="14">14</option><option value="16">16</option><option value="18">18</option><option value="20">20</option><option value="22">22</option><option value="24">24</option><option value="28">28</option></select></label><label class="field">默认执行权限<select name="permission"><option value="readonly">只读 · 阅读与分析</option><option value="workspace">项目内执行 · 越界时询问</option><option value="full">完全访问 · 直接执行本地操作</option></select></label>
+        <label class="field">个人协作偏好<textarea name="instructions" rows="5"></textarea><small>对新建或重新载入的对话生效。项目内的 AGENTS.md 由 Codex 正常读取。</small></label>
+        <div class="data-location"><span>本地数据</span><code id="data-directory"></code><button type="button" id="open-data" class="small-link">在访达中打开</button></div>
+      </section>
+      <section data-settings="extensions" hidden><h3>Skills</h3><p class="settings-intro">可以复制本机已有的个人 Skills。之后在输入框旁选择，也可以用 $名称 调用。</p><button id="import-skills" type="button" class="secondary">导入本机个人 Skills</button><span id="import-result" class="muted"></span><h3 class="mcp-title">MCP 服务</h3><p class="settings-intro">在独立配置中添加本地工具。保存后会重连引擎。</p><textarea id="extensions-config" class="code-editor" rows="9" spellcheck="false" aria-label="MCP 配置"></textarea><div class="connection-test"><button type="button" id="save-extensions" class="secondary">保存工具配置</button><button type="button" id="check-mcp" class="small-link">检查工具状态</button></div><pre id="mcp-status" class="mcp-status"></pre></section>
+    </div>
+    <div class="dialog-footer"><span id="settings-message"></span><button type="button" class="secondary close-dialog">取消</button><button type="submit" class="primary">保存设置</button></div>
+  </form></dialog>
+  <dialog id="input-dialog" class="input-dialog"><form method="dialog"><h2 id="input-title">重命名对话</h2><input id="input-value" autocomplete="off" aria-label="对话名称"><div class="dialog-footer"><button value="cancel" class="secondary">取消</button><button value="ok" class="primary">确定</button></div></form></dialog>
+  <script src="../node_modules/marked/lib/marked.umd.js"></script>
+  <script src="../node_modules/dompurify/dist/purify.min.js"></script>
+  <script src="../assets/katex/katex.min.js"></script>
+  <script src="math.js"></script>
+  <script src="../node_modules/@xterm/xterm/lib/xterm.js"></script>
+  <script src="../node_modules/@xterm/addon-fit/lib/addon-fit.js"></script>
+  <script src="renderer.js"></script>
+  <script src="native-ui.js"></script>
+  <script src="workspace-ui.js"></script>
+</body>
+</html>

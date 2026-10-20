@@ -1,0 +1,47 @@
+# Dependencies, downloaded executables and build output
+node_modules/
+runtime/
+release/
+dist/
+.protocol/
+artifacts/
+coverage/
+*.log
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+# Local credentials, sessions, project memory and Syncthing state
+.env
+.env.*
+!.env.example
+auth.json
+credential.bin
+settings.json
+preferences.json
+local-tools.json
+extensions.toml
+integrations.json
+tool-permissions.json
+desktop-access.json
+workspace.json
+*.sqlite*
+*.db
+*.db-*
+*.jsonl
+attachments/
+shared-chats/
+voice-temp/
+PROJECT_MEMORY*.md
+*sync-conflict*
+~syncthing~*
+.stfolder/
+.stversions/
+.stignore
+
+# Editors and temporary export work
+.vscode/
+.idea/
+*.tmp
+*.bak

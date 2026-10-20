@@ -1,0 +1,45 @@
+{
+  "name": "codex-desk",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An independent Codex app-server desktop client for Responses-compatible APIs",
+  "main": "src/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/*.test.cjs",
+    "check": "node scripts/check.cjs",
+    "audit:public": "node scripts/audit-public.cjs",
+    "test:ui": "electron tests/electron-smoke.cjs",
+    "test:workspace": "electron tests/workspace-ui.cjs",
+    "test:native": "electron tests/native-ui.cjs",
+    "package:mac": "node scripts/package-mac.mjs",
+    "package:win": "electron-packager . 'Codex Desk' --platform=win32 --arch=x64 --out=release --overwrite --ignore='^/(release|tests|\\.protocol|artifacts|shared-chats)' --icon=assets/desk.ico",
+    "setup": "node scripts/setup-runtime.cjs",
+    "test:visual": "electron tests/ui-polish.cjs"
+  },
+  "dependencies": {
+    "@iarna/toml": "^2.2.5",
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
+    "dompurify": "^3.2.6",
+    "marked": "^16.0.0"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "@openai/codex": "0.163.0",
+    "electron": "^44.9.0"
+  },
+  "license": "MIT",
+  "author": "Felix-robot",
+  "engines": {
+    "node": ">=22.15.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Felix-robot/codex-desk.git"
+  },
+  "homepage": "https://github.com/Felix-robot/codex-desk",
+  "bugs": {
+    "url": "https://github.com/Felix-robot/codex-desk/issues"
+  }
+}
